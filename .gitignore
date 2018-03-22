@@ -1,0 +1,14 @@
+*.png
+*.jpg
+*.pyc
+*.meta
+*.index
+*.zip
+*.tar.gz
+*.data*
+*.pkl
+hwocr/data/*
+line_ocr/data/*
+line_ocr/log/*
+hwocr/test_images/*
+# Larger than 10MB
