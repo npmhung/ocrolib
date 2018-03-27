@@ -186,7 +186,7 @@ def train_name(args):
                 if epoch % args.eval_step == 0:
                     if args.mode=='train' and min_cost > total_cost:
                         min_cost = total_cost
-                        saver.save(sess, model_path)
+                        saver.save(sess, args.save_model)
                         print('save model with cost {}'.format(min_cost))
                     # batch_imgs, batch_lbls = Next_Batch(batch_size)
                     # batch_imgs, batch_lbls = lineOCR.generate_lineocr_samples(batch_size=batch_size)
@@ -208,7 +208,7 @@ def train_name(args):
                             rs = bs[1] - bs[0]
                             if bs[1] >= len(batch_imgs):
                                 bs = [len(batch_imgs) - args.batch_size, len(batch_imgs)]
-                            # print(bs)
+                            print(bs, len(batch_imgs), ntb)
                             imgs=batch_imgs[bs[0]:bs[1]]
                             lbls= Labels_To_Sparse_Tuple(batch_lbls[bs[0]:bs[1]])
 
@@ -433,11 +433,14 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', default=32, type=int)
     parser.add_argument('--is_restore', default=False, type=str2bool)
     parser.add_argument('--is_dynamic', default=False, type=str2bool)
-    args = parser.parse_args()
+    parser.add_argument('--save_model', default='@')
 
-    args.is_restore = True
+    args = parser.parse_args()
+    if args.save_model == '@':
+        args.save_model = args.model_path
+    # args.is_restore = True
     # args.is_dynamic = False
-    args.mode = 'test_file'
+    # args.mode = 'test_file'
 
 
     print(args)
